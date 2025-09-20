@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import User from '../models/user.js'
+import { handleSingup, handleSignin, handleLogout } from '../controllers/user.js';
 
 const router = Router();
 
@@ -12,21 +13,10 @@ router.get('/signup', (req, res) => {
    res.render('signup');
 })
 
-router.post('/signup', async (req, res) => {
-   const { fullName, email, password } = req.body;
-   await User.create({ fullName, email, password })
+router.post('/signup', handleSingup);
 
-   return res.status(201).redirect('/');
+router.post('/signin', handleSignin);
 
-})
-
-router.post('/signin', async (req, res) => {
-   const { email, password } = req.body;
-   User.matchPassword(email, password);
-   const user = await User.matchPassword(email, password);
-   console.log("user", user);
-   return res.status(201).redirect("/");
-
-})
+router.get('/logout', handleLogout);
 
 export default router;
