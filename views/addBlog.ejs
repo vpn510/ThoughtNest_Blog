@@ -4,27 +4,72 @@
 <head>
    <%- include('./partials/head') %>
       <title>Add New Blog</title>
+      <style>
+         body {
+            background-color: #f5fff5;
+         }
+
+         h1 {
+            color: #339933;
+         }
+
+         .form-label {
+            color: #339933;
+            font-weight: 500;
+         }
+
+         .form-control:focus {
+            border-color: #66cc66;
+            box-shadow: 0 0 0 0.2rem rgba(102, 204, 102, 0.25);
+         }
+
+         .btn-outline-success {
+            border-color: #66cc66;
+            color: #66cc66;
+         }
+
+         .btn-outline-success:hover {
+            background-color: #66cc66;
+            color: white;
+         }
+
+         .form-text {
+            color: #669966;
+         }
+      </style>
 </head>
 
 <body>
    <%- include('./partials/nav') %>
-      <div class="container mt-3">
-         <form action="/blog" method="POST">
-            <div class="mb-3">
+
+      <main class="container py-5">
+         <h1 class="mb-4">Create a New Blog Post</h1>
+
+         <form action="/blog" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <!-- Cover Image Upload -->
+            <div class="mb-4">
                <label for="coverImage" class="form-label">Cover Image</label>
-               <input type="file" class="form-control" id="coverImage" name="coverImage" aria-describedby="coverImage">
+               <input type="file" class="form-control" id="coverImage" name="coverImage" required>
+               <div class="form-text">Upload a high-quality image to represent your blog.</div>
             </div>
-            <div class="mb-3">
+
+            <!-- Blog Title -->
+            <div class="mb-4">
                <label for="title" class="form-label">Title</label>
-               <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
+               <input type="text" class="form-control" id="title" name="title" placeholder="Enter blog title" required>
             </div>
-            <div class="mb-3">
+
+            <!-- Blog Body -->
+            <div class="mb-4">
                <label for="body" class="form-label">Body</label>
-               <textarea class="form-control" id="body" rows="3" name="body" aria-describedby="body"></textarea>
+               <textarea class="form-control" id="body" name="body" rows="6"
+                  placeholder="Write your blog content here..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-outline-success">Publish Blog</button>
          </form>
-      </div>
+      </main>
 
       <%- include('./partials/scripts') %>
 </body>

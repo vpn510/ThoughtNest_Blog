@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <%- include('./partials/head') %>
+      <title>
+         <%= blog.title %> | Blog
+      </title>
+      <style>
+         body {
+            background-color: #f8fff8;
+         }
+
+         h1,
+         h2 {
+            color: #339933;
+         }
+
+         .btn-outline-primary {
+            border-color: #66cc66;
+            color: #66cc66;
+         }
+
+         .btn-outline-primary:hover {
+            background-color: #66cc66;
+            color: white;
+         }
+
+         .card {
+            border: 1px solid #66cc66;
+         }
+
+         .card-title,
+         .card-text {
+            color: #333;
+         }
+
+         .form-control:focus {
+            border-color: #66cc66;
+            box-shadow: 0 0 0 0.2rem rgba(102, 204, 102, 0.25);
+         }
+      </style>
+</head>
+
+<body>
+   <%- include('./partials/nav') %>
+
+      <main class="container py-4">
+         <!-- Blog Header -->
+         <article class="mb-5">
+            <h1 class="mb-3">
+               <%= blog.title %>
+            </h1>
+            <img src="<%= blog.coverImageUrl %>" class="img-fluid rounded mb-4" alt="Cover image for <%= blog.title %>">
+            <div class="lead">
+               <pre>
+                  <%= blog.body %>
+               </pre>
+            </div>
+         </article>
+
+         <!-- Author Info -->
+         <section class="d-flex align-items-center mb-5">
+            <img src="<%= blog.createdBy.profileImageUrl %>" alt="Author profile" class="rounded-circle me-3"
+               width="50">
+            <strong>
+               <%= blog.createdBy.fullName %>
+            </strong>
+         </section>
+
+         <!-- Comments Section -->
+         <section>
+            <h2 class="mb-4">Comments</h2>
+
+            <% if (locals.user) { %>
+               <form action="/comment/<%= blog._id %>" method="POST" class="mb-4">
+                  <div class="mb-3">
+                     <input type="text" class="form-control" name="content" placeholder="Write your comment here...">
+                  </div>
+                  <button type="submit" class="btn btn-outline-primary">Submit Comment</button>
+               </form>
+               <% } %>
+
+                  <div class="row">
+                     <% comments.forEach(comment=> { %>
+                        <div class="col-md-6 mb-4">
+                           <div class="card h-100 shadow-sm">
+                              <div class="card-body">
+                                 <div class="d-flex align-items-center mb-2">
+                                    <img src="<%= comment.createdBy.profileImageUrl %>" class="rounded-circle me-2"
+                                       width="40" alt="User profile">
+                                    <h6 class="mb-0">
+                                       <%= comment.createdBy.fullName %>
+                                    </h6>
+                                 </div>
+                                 <p class="card-text">
+                                    <%= comment.content %>
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                        <% }) %>
+                  </div>
+         </section>
+      </main>
+
+      <%- include('./partials/scripts') %>
+</body>
+
+</html>
